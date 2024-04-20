@@ -54,13 +54,21 @@
     "phone": "(704) 398-7993"
   },
   {
-    "name": "Andrzej",
-    "email": "am@am.pl",
-    "phone": "12345678977"
+    "id": "e3bc77be-5cc6-46a6-8508-9e94dbe04588",
+    "name": "Edward Noźycoręki",
+    "email": "edward@edek.com",
+    "phone": "123456789"
   },
   {
-    "name": "Andrzej",
-    "email": "am@am.pl",
-    "phone": "12345678977"
+    "id": "baef1d64-1d7c-4e8b-9772-28a59b6e100f",
+    "name": "Tatuś Muminka",
+    "email": "tata@muminka.com",
+    "phone": "123456789"
+  },
+  {
+    "id": "71d9ea7e-7189-4191-bd44-95092fa392f1",
+    "name": "Stefan Siara",
+    "email": "memory5@siara.com",
+    "phone": "123456789"
   }
 ]

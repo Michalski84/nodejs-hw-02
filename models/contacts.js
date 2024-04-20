@@ -1,5 +1,6 @@
 const fs = require('fs').promises;
 const path = require('path');
+const { v4: uuidv4 } = require('uuid');
 
 const contactsPath = path.join(__dirname, 'contacts.json');
 
@@ -24,9 +25,11 @@ const getContactById = async (contactId) => {
 const addContact = async (newContact) => {
   try {
     const contacts = await listContacts();
-    const updatedContacts = [...contacts, newContact];
+    const id = uuidv4();
+    const contactWithId = { id, ...newContact };
+    const updatedContacts = [...contacts, contactWithId];
     await fs.writeFile(contactsPath, JSON.stringify(updatedContacts, null, 2));
-    return newContact;
+    return contactWithId;
   } catch (error) {
     throw new Error('Unable to add contact');
   }
