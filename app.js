@@ -43,9 +43,29 @@ const contactSchema = new mongoose.Schema({
   },
 });
 
-const Contact = mongoose.model('Contact', contactSchema); 
+const Contact = mongoose.model('Contact', contactSchema);
 
 app.use('/api', contactsRouter(Contact)); 
+
+app.patch('/api/contacts/:id/favorite', async (req, res) => {
+  const { id } = req.params;
+  const { favorite } = req.body;
+  
+  if (favorite === undefined) {
+    return res.status(400).json({ message: 'missing field favorite' });
+  }
+
+  try {
+    const contact = await Contact.findByIdAndUpdate(id, { favorite }, { new: true }).select('-__v');
+    if (contact) {
+      res.json(contact);
+    } else {
+      res.status(404).json({ message: 'Not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Unable to update favorite status' });
+  }
+});
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

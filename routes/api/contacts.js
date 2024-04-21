@@ -1,6 +1,5 @@
 const express = require('express');
 const Joi = require('joi');
-const { v4: uuidv4 } = require('uuid');
 
 function contactsRouter(Contact) {
   const router = express.Router();
@@ -75,7 +74,7 @@ function contactsRouter(Contact) {
     }
 
     try {
-      const contact = await Contact.findByIdAndUpdate(id, { name, email, phone }, { new: true });
+      const contact = await Contact.findByIdAndUpdate(id, { name, email, phone }, { new: true }).select('-__v');
       if (contact) {
         res.json(contact);
       } else {
@@ -83,26 +82,6 @@ function contactsRouter(Contact) {
       }
     } catch (error) {
       res.status(500).json({ message: 'Unable to update contact' });
-    }
-  });
-
-  router.patch('/contacts/:id/favorite', async (req, res) => {
-    const { id } = req.params;
-    const { favorite } = req.body;
-    
-    if (favorite === undefined) {
-      return res.status(400).json({ message: 'missing field favorite' });
-    }
-
-    try {
-      const contact = await Contact.findByIdAndUpdate(id, { favorite }, { new: true });
-      if (contact) {
-        res.json(contact);
-      } else {
-        res.status(404).json({ message: 'Not found' });
-      }
-    } catch (error) {
-      res.status(500).json({ message: 'Unable to update favorite status' });
     }
   });
 
