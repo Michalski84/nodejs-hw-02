@@ -26,11 +26,19 @@ const userSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  verificationToken: {
+    type: String,
+    required: function () {
+      return this.isNew;
+    },
+  },
 });
 
 userSchema.pre('save', async function (next) {
   if (this.isModified('password') || this.isNew) {
-    this.password = await bcrypt.hash(this.password, 12);
+    if (!this.password.startsWith('$2a$')) {
+      this.password = await bcrypt.hash(this.password, 12);
+    }
   }
   next();
 });
