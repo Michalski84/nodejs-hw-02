@@ -15,4 +15,6 @@ router.get('/current', authMiddleware, async (req, res) => {
   }
 });
 
+
+
 module.exports = router;
